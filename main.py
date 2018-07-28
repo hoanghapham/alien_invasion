@@ -15,24 +15,25 @@ def run_game():
     ))
     pygame.display.set_caption("Alien Invasion!")
 
-    # Make ship
+    # Make ship, aliens group, bullets group
     ship = Ship(screen, ai_settings)
-
-    # Make bullet group
     bullets = Group()
+    aliens = Group()
+
+    # Create alien fleet
+    gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # Start the main loop for the game:
     while True:
-
         # Watch for keyboard & mouse events
         # Update screen & flip to a new screen
         # When pressing Space, check_event will register a space key down event 
         # and create a new bullet. Then bullets.update() will move the bullets
         # in the Group across the screen.
-        gf.check_events(ai_settings, screen, ship, bullets)
+        gf.check_events(ai_settings, screen, ship, aliens, bullets)
         ship.update()
         gf.update_bullets(bullets)
-        gf.update_screen(ai_settings, screen, ship, bullets)
+        gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 if __name__ == '__main__':
     run_game()
