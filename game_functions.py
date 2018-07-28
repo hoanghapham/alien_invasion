@@ -96,3 +96,17 @@ def create_fleet(ai_settings, screen, ship, aliens):
         for alien_number in range(num_alien_x):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
+def change_fleet_directions(ai_settings, aliens):
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed 
+    ai_settings.fleet_direction *= -1
+
+def check_fleet_edges(ai_settings, aliens):
+    for alien in aliens.sprites():
+        if alien.reached_edges():
+            change_fleet_directions(ai_settings, aliens)
+            break
+
+def update_aliens(ai_settings, aliens):
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()

@@ -8,6 +8,7 @@ class Alien(Sprite):
         super().__init__()
         self.ai_settings = ai_settings
         self.screen = screen
+        self.screen_rect = self.screen.get_rect()
 
         # Load alien image
         self.image = pygame.image.load('images/alien.bmp')
@@ -24,6 +25,13 @@ class Alien(Sprite):
         """Draw the alien at its location"""
         self.screen.blit(self.image, self.rect)
 
+    def reached_edges(self):
+        if self.rect.right >= self.screen_rect.right:
+            return True
+        elif self.rect.left <= 0:
+            return True
 
+    def update(self):
+        self.x += self.ai_settings.alien_speed_factor * self.ai_settings.fleet_direction
+        self.rect.x = self.x
 
-    
