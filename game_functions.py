@@ -34,20 +34,18 @@ def check_keyup_events(event, ship):
 def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """Watch for keyboard and mouse events"""
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-        # Check if right key is pressed and set right movement flag = True
-        # Then, check if right key is released and set right movement flag = False
-        # Do the same for left key.
-        elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, stats, ship, aliens, bullets)
-        elif event.type == pygame.KEYUP:
-            check_keyup_events(event, ship)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship, 
-                                 aliens, bullets, mouse_x, mouse_y)
+        if stats.game_active:
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                check_keydown_events(event, ai_settings, screen, stats, ship, aliens, bullets)
+            elif event.type == pygame.KEYUP:
+                check_keyup_events(event, ship)
+        else:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                check_play_button(ai_settings, screen, stats, play_button, ship, 
+                                    aliens, bullets, mouse_x, mouse_y)
 
 def check_collisions(ai_settings, screen, ship, bullets, aliens):
     # If bullets collide with aliens, delete both
@@ -59,19 +57,19 @@ def check_collisions(ai_settings, screen, ship, bullets, aliens):
 
 def start_game(ai_settings, screen, stats, ship, aliens, bullets):
     # Hide mouse cursor
-        pygame.mouse.set_visible(False)
+    pygame.mouse.set_visible(False)
 
-        # Reset game statistics
-        stats.reset_stats()
-        stats.game_active = True
-        
-        # Empty aliens and bullets
-        aliens.empty()
-        bullets.empty()
+    # Reset game statistics
+    stats.reset_stats()
+    stats.game_active = True
+    
+    # Empty aliens and bullets
+    aliens.empty()
+    bullets.empty()
 
-        # Create new fleet & center ship
-        create_fleet(ai_settings, screen, ship, aliens)
-        ship.center_ship()
+    # Create new fleet & center ship
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
 
 def check_play_button(ai_settings, screen, stats, play_button, ship, 
         aliens, bullets, mouse_x, mouse_y):
