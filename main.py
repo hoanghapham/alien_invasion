@@ -42,7 +42,8 @@ def run_game():
         # When pressing Space, check_event will register a space key down event 
         # and create a new bullet. Then bullets.update() will move the bullets
         # in the Group across the screen.
-        gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
+        gf.check_events(ai_settings, screen, stats, scoreboard, play_button, 
+            ship, aliens, bullets)
 
         if stats.game_active:
             ship.update()

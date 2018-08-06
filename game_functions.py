@@ -31,7 +31,8 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
+def check_events(ai_settings, screen, stats, scoreboard, play_button, 
+        ship, aliens, bullets):
     """Watch for keyboard and mouse events"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -42,7 +43,7 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship, 
+            check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship, 
                                 aliens, bullets, mouse_x, mouse_y)
 
 def check_collisions(ai_settings, screen, stats, scoreboard, ship, bullets, aliens):
@@ -53,14 +54,17 @@ def check_collisions(ai_settings, screen, stats, scoreboard, ship, bullets, alie
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             scoreboard.prep_score()
+        check_high_score(stats, scoreboard)
 
     if len(aliens) == 0:
         bullets.empty()
         ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
+        stats.level += 1
+        scoreboard.prep_level()
 
 
-def start_game(ai_settings, screen, stats, ship, aliens, bullets):
+def start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard):
     
     # Reset speed
     ai_settings.init_dynamic_settings()
@@ -80,13 +84,18 @@ def start_game(ai_settings, screen, stats, ship, aliens, bullets):
     create_fleet(ai_settings, screen, ship, aliens)
     ship.center_ship()
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, 
+    # reset scores
+    scoreboard.prep_score()
+    scoreboard.prep_high_score()
+    scoreboard.prep_level
+
+def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship, 
         aliens, bullets, mouse_x, mouse_y):
     """Start new game when player click play. Reset the field"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
 
     if button_clicked and not stats.game_active:    
-        start_game(ai_settings, screen, stats, ship, aliens, bullets)
+        start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard)
         
 
 
@@ -214,3 +223,9 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
         if alien.rect.bottom >= screen_rect.bottom:
             ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
             break
+
+
+def check_high_score(stats, scoreboard):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        scoreboard.prep_high_score()
