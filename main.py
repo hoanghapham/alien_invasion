@@ -5,6 +5,7 @@ from settings import Settings
 from ship import Ship
 from game_stats import GameStats
 from button import Button
+from scoreboard import ScoreBoard
 import game_functions as gf
 
 
@@ -31,6 +32,9 @@ def run_game():
     # Create play button
     play_button = Button(ai_settings, screen, 'Play!')
 
+    # Create Scoreboard
+    scoreboard = ScoreBoard(ai_settings, screen, stats)
+
     # Start the main loop for the game:
     while True:
         # Watch for keyboard & mouse events
@@ -42,10 +46,11 @@ def run_game():
 
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, bullets, aliens)
+            gf.update_bullets(ai_settings, screen, stats, scoreboard, ship, bullets, aliens)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
         
-        gf.update_screen(ai_settings, stats, screen, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_settings, stats, screen, ship, aliens, bullets, 
+                        play_button, scoreboard)
 
 if __name__ == '__main__':
     run_game()
