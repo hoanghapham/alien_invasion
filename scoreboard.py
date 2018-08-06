@@ -49,9 +49,9 @@ class ScoreBoard():
         self.level_image = self.font.render(level_str, True, 
             self.text_color, self.ai_settings.bg_color)
 
-        self.level_rect = self.high_score_image.get_rect()
-        self.level_rect.top = 20
-        self.level_rect.left = 20
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.top = self.score_rect.bottom + 10
+        self.level_rect.right = self.score_rect.right 
 
     def show_score(self):
         self.screen.blit(self.score_image, self.score_rect)
