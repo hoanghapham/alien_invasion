@@ -51,11 +51,16 @@ def check_collisions(ai_settings, screen, ship, bullets, aliens):
     # If bullets collide with aliens, delete both
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if len(aliens) == 0:
-        create_fleet(ai_settings, screen, ship, aliens)
         bullets.empty()
+        ai_settings.increase_speed()
+        create_fleet(ai_settings, screen, ship, aliens)
 
 
 def start_game(ai_settings, screen, stats, ship, aliens, bullets):
+    
+    # Reset speed
+    ai_settings.init_dynamic_settings()
+
     # Hide mouse cursor
     pygame.mouse.set_visible(False)
 
@@ -109,7 +114,7 @@ def update_bullets(ai_settings, screen, ship,   bullets, aliens):
 
     # Remove old bullets
     for bullet in bullets.copy():
-        if bullet.rect.bottom == 0:
+        if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     
     check_collisions(ai_settings, screen, ship, bullets, aliens)    
