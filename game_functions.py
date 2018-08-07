@@ -64,6 +64,7 @@ def check_collisions(ai_settings, screen, stats, scoreboard, ship, bullets, alie
         ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
         stats.level += 1
+        check_max_level(stats, scoreboard)
         scoreboard.prep_level()
 
 
@@ -240,9 +241,15 @@ def check_aliens_bottom(ai_settings, stats, scoreboard, screen,
                 ship, aliens, bullets, game_over)
             break
 
+def check_max_level(stats, scoreboard):
+    if stats.level > stats.max_level:
+        stats.max_level = stats.level
+        scoreboard.prep_high_score()
+    
 def check_high_score(stats, scoreboard):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         scoreboard.prep_high_score()
+
 
     
