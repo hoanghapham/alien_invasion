@@ -1,6 +1,8 @@
 import pygame.font
 from pygame.sprite import Group
 from ship import Ship
+from button import Button
+
 
 class ScoreBoard():
 
@@ -68,4 +70,3 @@ class ScoreBoard():
             ship.rect.x = 10 + ship_number * ship.rect.width
             ship.rect.y = 10
             self.ships.add(ship)
-
