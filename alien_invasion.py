@@ -1,5 +1,7 @@
 import pygame
 from pygame.sprite import Group
+import argparse
+import sys
 
 from settings import Settings
 from ship import Ship
@@ -8,11 +10,13 @@ from button import Button, GameOver
 from scoreboard import ScoreBoard
 import game_functions as gf
 
-
-def run_game():
+def run_game(mode):
     # Init game & create screen object
     pygame.init()
     ai_settings = Settings()
+    if mode == 'test':
+        ai_settings.test_mode == True
+        
     screen = pygame.display.set_mode((
         ai_settings.screen_width, ai_settings.screen_height
     ))
@@ -55,4 +59,9 @@ def run_game():
                         play_button, restart_button, scoreboard, game_over)
 
 if __name__ == '__main__':
-    run_game()
+    parser = argparse.ArgumentParser(description='Choose run mode.')
+    parser.add_argument('-m', '--mode', default='default', choices=['default', 'test'])
+    info = parser.parse_args()
+    run_game(info.mode)
+
+
