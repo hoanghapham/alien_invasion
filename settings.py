@@ -23,7 +23,7 @@ class Settings():
         self.alien_speed_factor = 1
         
         # Fleet settings
-        self.fleet_drop_speed = 100
+        self.fleet_drop_speed = 10
         self.fleet_direction = 1 # 1 means right, -1 means left
         
         # Stats
