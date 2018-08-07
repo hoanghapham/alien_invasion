@@ -1,7 +1,7 @@
 import pygame
+from pygame.sprite import Sprite
 
-
-class Ship():
+class Ship(Sprite):
 
     def __init__(self, screen, ai_settings):
         """
@@ -11,6 +11,7 @@ class Ship():
         screen: Pass in screen object so the ship can be drawn on that screen.
         ai_settings: pass in setting object
         """
+        super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
 
