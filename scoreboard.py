@@ -1,6 +1,8 @@
 import pygame.font
 from pygame.sprite import Group
 from ship import Ship
+from button import Button
+
 
 class ScoreBoard():
 
@@ -35,7 +37,8 @@ class ScoreBoard():
     def prep_high_score(self):
         """Turn highscore into a rendered image"""
         high_score = round(self.stats.high_score, -1)
-        high_score_str = 'Highscore: {:,}'.format(high_score)
+        high_score_str = "Max level: {} - Highscore: {:,}" \
+                        .format(self.stats.max_level, high_score)
         self.high_score_image = self.font.render(high_score_str, True, 
             self.text_color, self.ai_settings.bg_color)
 
@@ -68,4 +71,3 @@ class ScoreBoard():
             ship.rect.x = 10 + ship_number * ship.rect.width
             ship.rect.y = 10
             self.ships.add(ship)
-

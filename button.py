@@ -26,3 +26,35 @@ class Button():
     def draw_button(self):
         self.screen.fill(self.button_color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
+
+
+class GameOver():
+
+    def __init__(self, ai_settings, stats, screen, msg):
+        self.ai_settings = ai_settings
+        self.stats = stats
+        self.screen = screen
+        self.screen_rect = self.screen.get_rect()
+
+        # Setup button rect
+        self.width = 250
+        self.height = 50
+        # self.band_color = (230, 230, 230)
+        self.text_color = (30, 30, 30)
+        self.font = pygame.font.SysFont(None, 60)
+
+        self.rect = pygame.Rect(0, 0, self.width, self.height)
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.bottom = self.screen_rect.centery - 30
+
+        self.prep_msg(msg)
+    
+    def prep_msg(self, msg):
+        self.msg_image = self.font.render(msg, True, self.text_color)
+        self.msg_image_rect = self.msg_image.get_rect()
+        self.msg_image_rect.center = self.rect.center
+    
+    def draw_button(self):
+        # self.screen.fill(self.band_color, self.rect)
+        self.screen.blit(self.msg_image, self.msg_image_rect)
+        

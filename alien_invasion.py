@@ -1,18 +1,22 @@
 import pygame
 from pygame.sprite import Group
+import argparse
+import sys
 
 from settings import Settings
 from ship import Ship
 from game_stats import GameStats
-from button import Button
+from button import Button, GameOver
 from scoreboard import ScoreBoard
 import game_functions as gf
 
-
-def run_game():
+def run_game(mode):
     # Init game & create screen object
     pygame.init()
     ai_settings = Settings()
+    if mode == 'test':
+        ai_settings.test_mode == True
+        
     screen = pygame.display.set_mode((
         ai_settings.screen_width, ai_settings.screen_height
     ))
@@ -31,7 +35,8 @@ def run_game():
 
     # Create play button
     play_button = Button(ai_settings, screen, 'Play!')
-
+    restart_button = Button(ai_settings, screen, 'Restart')
+    game_over = GameOver(ai_settings, stats, screen, 'GAME OVER!')
     # Create Scoreboard
     scoreboard = ScoreBoard(ai_settings, screen, stats)
 
@@ -48,10 +53,15 @@ def run_game():
         if stats.game_active:
             ship.update()
             gf.update_bullets(ai_settings, screen, stats, scoreboard, ship, bullets, aliens)
-            gf.update_aliens(ai_settings, stats, scoreboard, screen, ship, aliens, bullets)
+            gf.update_aliens(ai_settings, stats, scoreboard, screen, ship, aliens, bullets, game_over)
         
         gf.update_screen(ai_settings, stats, screen, ship, aliens, bullets, 
-                        play_button, scoreboard)
+                        play_button, restart_button, scoreboard, game_over)
 
 if __name__ == '__main__':
-    run_game()
+    parser = argparse.ArgumentParser(description='Choose run mode.')
+    parser.add_argument('-m', '--mode', default='default', choices=['default', 'test'])
+    info = parser.parse_args()
+    run_game(info.mode)
+
+
