@@ -75,3 +75,13 @@ class ScoreBoard():
         self.screen.blit(self.level_image, self.level_rect)
         self.ships.draw(self.screen)
 
+def check_max_level(stats, scoreboard):
+    if stats.level > stats.max_level:
+        stats.max_level = stats.level
+        scoreboard.prep_high_score()
+    
+def check_high_score(stats, scoreboard):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        scoreboard.prep_high_score()
+

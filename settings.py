@@ -4,7 +4,7 @@ class Settings():
     def __init__(self):
         """Init game's settings"""
         
-        self.test_mode = True
+        self.test_mode = False
 
         # Screen settings
         self.screen_height = 720

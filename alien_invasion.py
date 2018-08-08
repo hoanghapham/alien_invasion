@@ -9,6 +9,9 @@ from game_stats import GameStats
 from button import Button, GameOver
 from scoreboard import ScoreBoard
 import game_functions as gf
+import player_input as inp
+import elements as elm
+
 
 def run_game(mode):
     # Init game & create screen object
@@ -31,7 +34,7 @@ def run_game(mode):
     aliens = Group()
 
     # Create alien fleet
-    gf.create_fleet(ai_settings, screen, ship, aliens)
+    elm.create_fleet(ai_settings, screen, ship, aliens)
 
     # Create play button
     play_button = Button(ai_settings, screen, 'Play!')
@@ -47,7 +50,7 @@ def run_game(mode):
         # When pressing Space, check_event will register a space key down event 
         # and create a new bullet. Then bullets.update() will move the bullets
         # in the Group across the screen.
-        gf.check_events(ai_settings, screen, stats, scoreboard, play_button, 
+        inp.check_events(ai_settings, screen, stats, scoreboard, play_button, 
             ship, aliens, bullets)
 
         if stats.game_active:
