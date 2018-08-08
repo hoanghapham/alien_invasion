@@ -51,6 +51,15 @@ def check_events(ai_settings, screen, stats, scoreboard, play_button,
             check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship, 
                                 aliens, bullets, mouse_x, mouse_y)
 
+def start_new_level(ai_settings, screen, stats, ship, aliens, bullets, scoreboard):
+    bullets.empty()
+    ai_settings.increase_speed()
+    create_fleet(ai_settings, screen, ship, aliens)
+    stats.level += 1
+    check_max_level(stats, scoreboard)
+    scoreboard.prep_level()
+
+
 def check_collisions(ai_settings, screen, stats, scoreboard, ship, bullets, aliens):
     # If bullets collide with aliens, delete both
     collisions = pygame.sprite.groupcollide(bullets, aliens, 
@@ -63,12 +72,8 @@ def check_collisions(ai_settings, screen, stats, scoreboard, ship, bullets, alie
         check_high_score(stats, scoreboard)
 
     if len(aliens) == 0:
-        bullets.empty()
-        ai_settings.increase_speed()
-        create_fleet(ai_settings, screen, ship, aliens)
-        stats.level += 1
-        check_max_level(stats, scoreboard)
-        scoreboard.prep_level()
+        start_new_level(ai_settings, screen, stats, ship, 
+            aliens, bullets, scoreboard)
 
 
 def start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard):
@@ -92,10 +97,7 @@ def start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard):
     ship.center_ship()
 
     # reset scores
-    scoreboard.prep_score()
-    scoreboard.prep_high_score()
-    scoreboard.prep_level()
-    scoreboard.prep_ship()
+    scoreboard.prep_images()
 
 def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship, 
         aliens, bullets, mouse_x, mouse_y):
@@ -105,8 +107,6 @@ def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship,
     if button_clicked and not stats.game_active:    
         start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard)
         
-
-
 # Update elements
 def update_screen(ai_settings, stats, screen, ship, aliens, bullets, 
                 play_button, restart_button, scoreboard, game_over):
