@@ -11,6 +11,11 @@ def fire_bullet(ai_settings, screen, ship, bullets):
             new_bullet = Bullet(ai_settings, screen, ship)
             bullets.add(new_bullet)
 
+def exit_game(stats):
+    stats.save_progress()
+    sys.exit()
+
+
 def check_keydown_events(event, ai_settings, screen, stats, ship, aliens, bullets, scoreboard):
     """Handling key down events"""
     if event.key == pygame.K_RIGHT:
@@ -22,8 +27,7 @@ def check_keydown_events(event, ai_settings, screen, stats, ship, aliens, bullet
     elif event.key == pygame.K_p:
         start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard)
     elif event.key == pygame.K_q:
-        stats.save_progress()
-        sys.exit()
+        exit_game(stats)
 
 def check_keyup_events(event, ship):
     """Handling key up events"""
@@ -37,8 +41,7 @@ def check_events(ai_settings, screen, stats, scoreboard, play_button,
     """Watch for keyboard and mouse events"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            stats.save_progress()
-            sys.exit()
+            exit_game(stats)
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, stats, ship, aliens, bullets, scoreboard)
         elif event.type == pygame.KEYUP:
