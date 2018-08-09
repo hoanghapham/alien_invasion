@@ -1,5 +1,5 @@
-Alien Invasion game - practice project from Python Crash Course book
-
+## Alien Invasion 
+Practice project from Python Crash Course book. 
 Requirements:
 - python 3
 - pygame
