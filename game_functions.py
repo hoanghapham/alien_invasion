@@ -1,3 +1,5 @@
+"""Functions to control game"""
+
 import sys
 import pygame
 from bullet import Bullet

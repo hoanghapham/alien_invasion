@@ -13,7 +13,6 @@ def check_play_button(ai_settings, screen, stats, scoreboard, play_button, ship,
     if button_clicked and not stats.game_active:    
         gf.start_game(ai_settings, screen, stats, ship, aliens, bullets, scoreboard)
         
-
 def fire_bullet(ai_settings, screen, ship, bullets):
     if len(bullets) < ai_settings.bullets_allowed:
             new_bullet = Bullet(ai_settings, screen, ship)
